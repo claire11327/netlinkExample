@@ -169,6 +169,10 @@ static void kernel_nl_recv_msg(struct sk_buff *skb)
                 /*get uId to send to target mailbox */
                 uID = strsep(&msg, " ");
                 userID = simple_strtol(uID,NULL,0);
+                if(userID > 1000 || userID < 0)
+                {
+                    return;
+                }
 
                 if(strlen(msg) <= 256 )
                 {

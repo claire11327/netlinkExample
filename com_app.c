@@ -85,7 +85,6 @@ int main(int argc, char *argv[])
 
     if(strcmp((char *)NLMSG_DATA(nlh),"Fail") == 0)
     {
-        printf("Fail reg\n");
         return -1;
     }
 
