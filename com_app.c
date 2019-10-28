@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
     strncat(umsg, ", type=", 7);
     strncat(umsg, argv[2], 8);
 
-    printf("umsg = %s\n", umsg);
 
 
 
@@ -75,16 +74,14 @@ int main(int argc, char *argv[])
     msg.msg_iovlen = 1;
 
     strcpy(NLMSG_DATA(nlh), umsg);
-    printf("Sending message to kernel: %s\n", (char *)NLMSG_DATA(nlh));
     sendmsg(sock_fd,&msg,0);
-    printf("Waiting for message from kernel\n");
 
     /* clear nlh */
     memset(nlh,0, NLMSG_SPACE(MAX_PAYLOAD));
 
     /* Read message from kernel */
     recvmsg(sock_fd, &msg, 0);
-    printf("Received message payload: %s\n", (char *)NLMSG_DATA(nlh));
+    printf("%s\n", (char *)NLMSG_DATA(nlh));
 
     if(strcmp((char *)NLMSG_DATA(nlh),"Fail") == 0)
     {
@@ -95,9 +92,7 @@ int main(int argc, char *argv[])
 
 
 
-    /* while */
-    int j;
-    for(j = 0; j < 4 ; j++)
+    while(1)
     {
         memset(nlh, 0, NLMSG_SPACE(MAX_PAYLOAD));
         nlh->nlmsg_len = NLMSG_SPACE(MAX_PAYLOAD);
@@ -148,20 +143,14 @@ int main(int argc, char *argv[])
 
         }
 
-        printf("%ld  fgets = [%s]\n",sizeof(str),str);
-
-
-        printf("Sending message to kernel: %s\n", (char *)NLMSG_DATA(nlh));
         sendmsg(sock_fd,&msg,0);
-        printf("Waiting for message from kernel\n");
 
         /* clear nlh */
         memset(nlh,0, NLMSG_SPACE(MAX_PAYLOAD));
 
-        printf("---------------befor Received message payload: %s\n", (char *)NLMSG_DATA(nlh));
         /* Read message from kernel */
         recvmsg(sock_fd, &msg, 0);
-        printf("Received message payload: %s\n", (char *)NLMSG_DATA(nlh));
+        printf("%s\n", (char *)NLMSG_DATA(nlh));
 
 
 
